@@ -1,0 +1,20 @@
+<h3>Show me</h3>
+
+<form (ngSubmit)="searchGif(gifForm)" #gifForm="ngForm">
+  <input type="text" ngModel name="searchTerm" />
+
+  <button type="submit">search</button>
+</form>
+
+<div><button (click)="getGifs(5)">getGifs</button></div>
+
+<div>
+  <!-- <ul *ngFor="let gif of gifs">
+        <li >{{gif.title}}</li>
+    </ul> -->
+  <div class="imageContainer" *ngFor="let gif of gifs">
+    <div class="imgContainer">
+      <img src="{{ gif.images.original.url }}" alt="gif" />
+    </div>
+  </div>
+</div>
