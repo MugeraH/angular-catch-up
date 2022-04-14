@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -8,24 +9,26 @@ import { environment } from '../../../environments/environment';
 export class GifService {
   constructor(private http: HttpClient) {}
 
+  // axios
   //getGifs
-  getGifs(): any {
-    return this.http.get(
+  getGifs(): Observable<any> {
+    return this.http.get<any>(
       `https://api.giphy.com/v1/gifs/trending?api_key=${environment.apiKey}&limit=4&rating=g`
     );
-      // .subscribe(
-      //   (data) => {
-      //     results = data;
-      //   },
-      //   (err) => {
-      //     console.log('error');
-      //   }
-      // );
-
-    // return results;
   }
 
   //getMoreGifs
+  getMoreGifs(count: number): Observable<any> {
+    return this.http.get<any>(
+      `https://api.giphy.com/v1/gifs/trending?api_key=${environment.apiKey}&limit=${count}&rating=g`
+    );
+  }
 
-  //search
+  //searchGIfs
+
+  searchGifs(searchTerm: string): Observable<any> {
+    return this.http.get<any>(
+      `https://api.giphy.com/v1/gifs/search?api_key=${environment.apiKey}&q=${searchTerm}&limit=2&offset=0&rating=g&lang=en`
+    );
+  }
 }

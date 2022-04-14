@@ -14,52 +14,62 @@ export class QuotesComponent implements OnInit {
 
   gifs: any[] = [];
 
+  //WHAT WE HAD INITALLY
+  // getGifs(count: number): any {
+  //   this.http
+  //     .get<any>(
+  //       `https://api.giphy.com/v1/gifs/trending?api_key=6fgd2gbJw4eCysU8OHkVlU0SBB04i6OS&limit=${count}&rating=g`
+  //     )
+  //     .subscribe(
+  //       (data) => {
+  //         data.data;
+  //         // console.log(data.data);
+  //         this.gifs = data.data;
+  //       },
+  //       (err) => {
+  //         console.log('error');
+  //       }
+  //     );
+  // }
+
+  //USING A SERVICE
+  getGifs(count: number): any {
+    this.gifService.getMoreGifs(count).subscribe((data) => {
+      this.gifs = data.data;
+    });
+  }
+  //WHAT WE HAD INITALLY
+  // searchGif(form: NgForm) {
+  //   let { searchTerm } = form.value;
+
+  //   this.http
+  //     .get<any>(
+  //       ` https://api.giphy.com/v1/gifs/search?api_key=6fgd2gbJw4eCysU8OHkVlU0SBB04i6OS&q=${searchTerm}&limit=2&offset=0&rating=g&lang=en`
+  //     )
+  //     .subscribe(
+  //       (data) => {
+  //         this.gifs = data.data;
+  //       },
+  //       (err) => {
+  //         console.log('error');
+  //       }
+  //     );
+
+  //   form.reset();
+  // }
+
+  //USING A SERVICE
   searchGif(form: NgForm) {
     let { searchTerm } = form.value;
-
-    this.http
-      .get<any>(
-        ` https://api.giphy.com/v1/gifs/search?api_key=6fgd2gbJw4eCysU8OHkVlU0SBB04i6OS&q=${searchTerm}&limit=2&offset=0&rating=g&lang=en`
-      )
-      .subscribe(
-        (data) => {
-          this.gifs = data.data;
-        },
-        (err) => {
-          console.log('error');
-        }
-      );
-
+    this.gifService.searchGifs(searchTerm).subscribe((data) => {
+      this.gifs = data.data;
+    });
     form.reset();
-  }
-  getGifs(count: number): any {
-     this.http
-      .get<any>(`${environment.apiUrl}${count}&rating=g`)
-      .subscribe(
-        (data) => {
-          data.data;
-          // console.log(data.data);
-          this.gifs = data.data;
-        },
-        (err) => {
-          console.log('error');
-        }
-      );
   }
 
   ngOnInit(): void {
-   
-
-    this.gifs = this.getGifs(3);
-    // console.log(
-    //   this.gifService.getGifs().subscribe(
-    //     (data: any) => {
-    //       return data;
-    //     },
-    //     (err: any) => {
-    //       console.log('error');
-    //     }
-    //   )
-    // );
+    this.gifService.getGifs().subscribe((data) => {
+      this.gifs = data.data;
+    });
   }
 }
