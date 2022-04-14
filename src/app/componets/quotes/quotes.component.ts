@@ -33,7 +33,7 @@ export class QuotesComponent implements OnInit {
   // }
 
   //USING A SERVICE
-  getGifs(count: number): any {
+  getGifs(count: number) {
     this.gifService.getMoreGifs(count).subscribe((data) => {
       this.gifs = data.data;
     });
